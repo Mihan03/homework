@@ -7,11 +7,11 @@
 <body>
 <p th:text="${book.getName() + ', ' + book.getAuthor() + ', ' + book.getYear()}"></p>
 
-<div th:if="${book.getPersonId() == null}">
+<div th:if="${people != null}">
     <p>This book is free. Who should be assigned it?</p>
     <form th:method="PATCH" th:action="@{/books/{id}/set(id=${book.getId()})}">
-        <label for="person">Choose person</label>
-        <select th:object="${person}" th:field="*{id}" id="person">
+        <label for="human">Choose a person</label>
+        <select th:object="${person}" th:field="*{id}" id="human">
             <option th:each="person : ${people}" th:value="${person.getId()}" th:text="${person.getName()}">
             </option>
         </select>
@@ -19,8 +19,8 @@
     </form>
 </div>
 
-<div th:if="${book.getPersonId() != null}">
-    <span th:text="'The book belongs to ' + ${person.getName()}"/>
+<div th:if="${owner != null}">
+    <span th:text="'The book belongs to ' + ${owner.getName()}"/>
     <form th:method="PATCH" th:action="@{/books/{id}/unset(id=${book.getId()})}" th:object="${book}">
         <input type="submit" value="Release the book"/>
     </form>
